@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
+import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -25,7 +26,7 @@ public class FindCommandParserTest {
         // invalid search type
         assertParseFailure(parser, "email alice@example.com",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "phone 12345678",
+        assertParseFailure(parser, "tags diabetes",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "invalid alice bob",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -64,6 +65,22 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("alice", "BOB")));
         assertParseSuccess(parser, "name alice BOB", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_validNumberArgs_returnsFindCommand() {
+        FindCommand expectedFindCommand =
+                new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("123", "456")));
+        assertParseSuccess(parser, "number 123 456", expectedFindCommand);
+
+        assertParseSuccess(parser, " \n number \n 123 \n \t 456  \t", expectedFindCommand);
+
+        FindCommand expectedSingleKeywordCommand =
+                new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("123")));
+        assertParseSuccess(parser, "number 123", expectedSingleKeywordCommand);
+
+        assertParseSuccess(parser, "NUMBER 123 456", expectedFindCommand);
+        assertParseSuccess(parser, "Number 123 456", expectedFindCommand);
     }
 
 }

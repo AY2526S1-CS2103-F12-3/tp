@@ -10,6 +10,7 @@ import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.Person;
+import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -53,6 +54,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         switch (searchType) {
         case "name":
             return new NameContainsKeywordsPredicate(keywords);
+        case "number":
+            return new PhoneContainsKeywordsPredicate(keywords);
         default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
