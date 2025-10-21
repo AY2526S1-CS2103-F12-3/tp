@@ -13,7 +13,7 @@ import casetrack.app.logic.parser.exceptions.ParseException;
 public class ViewDetailsCommandParser implements Parser<Command> {
 
     public static final String MESSAGE_INVALID_VIEW_DETAILS_FORMAT =
-        "Expected 'view <PERSON_INDEX>'";
+            "Expected 'view <PATIENT_INDEX>'";
 
     /**
      * Parses the given {@code String} of arguments and returns a

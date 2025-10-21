@@ -3,8 +3,8 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +24,12 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validPatientArgs_returnsDeletePatientCommand() {
-        assertParseSuccess(parser, "patient 1", new DeletePatientCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "patient 1", new DeletePatientCommand(INDEX_FIRST_PATIENT));
     }
 
     @Test
     public void parse_validNoteArgs_returnsDeleteNoteCommand() {
-        assertParseSuccess(parser, "note 1 2", new DeleteNoteCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
+        assertParseSuccess(parser, "note 1 2", new DeleteNoteCommand(INDEX_FIRST_PATIENT, INDEX_SECOND_PATIENT));
     }
 
     @Test

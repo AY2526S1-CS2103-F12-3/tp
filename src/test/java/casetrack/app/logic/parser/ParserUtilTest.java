@@ -2,7 +2,7 @@ package casetrack.app.logic.parser;
 
 import static casetrack.app.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static casetrack.app.testutil.Assert.assertThrows;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,10 +14,10 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.Address;
-import casetrack.app.model.person.Email;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Address;
+import casetrack.app.model.patient.Email;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Phone;
 import casetrack.app.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -50,10 +50,10 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_PATIENT, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_PATIENT, ParserUtil.parseIndex("  1  "));
     }
 
     @Test

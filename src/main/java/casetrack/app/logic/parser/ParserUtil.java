@@ -9,12 +9,12 @@ import java.util.Set;
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.commons.util.StringUtil;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.Address;
-import casetrack.app.model.person.Email;
-import casetrack.app.model.person.Income;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Note;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Address;
+import casetrack.app.model.patient.Email;
+import casetrack.app.model.patient.Income;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Note;
+import casetrack.app.model.patient.Phone;
 import casetrack.app.model.tag.Tag;
 
 /**

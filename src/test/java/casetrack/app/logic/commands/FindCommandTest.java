@@ -1,11 +1,11 @@
 package casetrack.app.logic.commands;
 
-import static casetrack.app.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static casetrack.app.logic.Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW;
 import static casetrack.app.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static casetrack.app.testutil.TypicalPersons.CARL;
-import static casetrack.app.testutil.TypicalPersons.ELLE;
-import static casetrack.app.testutil.TypicalPersons.FIONA;
-import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
+import static casetrack.app.testutil.TypicalPatients.CARL;
+import static casetrack.app.testutil.TypicalPatients.ELLE;
+import static casetrack.app.testutil.TypicalPatients.FIONA;
+import static casetrack.app.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import casetrack.app.model.Model;
 import casetrack.app.model.ModelManager;
 import casetrack.app.model.UserPrefs;
-import casetrack.app.model.person.NameContainsKeywordsPredicate;
+import casetrack.app.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -50,28 +50,28 @@ public class FindCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different patient -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    public void execute_zeroKeywords_noPatientFound() {
+        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPatientList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getFilteredPatientList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+    public void execute_multipleKeywords_multiplePatientsFound() {
+        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPatientList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPatientList());
     }
 
     @Test

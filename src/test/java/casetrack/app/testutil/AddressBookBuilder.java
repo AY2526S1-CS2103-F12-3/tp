@@ -1,12 +1,12 @@
 package casetrack.app.testutil;
 
 import casetrack.app.model.AddressBook;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ * {@code AddressBook ab = new AddressBookBuilder().withPatient("John", "Doe").build();}
  */
 public class AddressBookBuilder {
 
@@ -21,10 +21,10 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Patient} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
-        addressBook.addPerson(person);
+    public AddressBookBuilder withPatient(Patient patient) {
+        addressBook.addPatient(patient);
         return this;
     }
 

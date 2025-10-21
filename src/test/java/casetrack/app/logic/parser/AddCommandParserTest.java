@@ -36,127 +36,128 @@ import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static casetrack.app.testutil.TypicalPersons.AMY;
-import static casetrack.app.testutil.TypicalPersons.BOB;
+import static casetrack.app.testutil.TypicalPatients.AMY;
+import static casetrack.app.testutil.TypicalPatients.BOB;
 
 import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.AddCommand;
-import casetrack.app.model.person.Address;
-import casetrack.app.model.person.Email;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Person;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Address;
+import casetrack.app.model.patient.Email;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Patient;
+import casetrack.app.model.patient.Phone;
 import casetrack.app.model.tag.Tag;
-import casetrack.app.testutil.PersonBuilder;
+import casetrack.app.testutil.PatientBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withIncome(VALID_INCOME_BOB).withTags(VALID_TAG_FRIEND).build();
+        Patient expectedPatient = new PatientBuilder(BOB).withIncome(VALID_INCOME_BOB).withTags(VALID_TAG_FRIEND)
+            .build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                        + ADDRESS_DESC_BOB + INCOME_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPatient));
 
 
         // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder(BOB).withIncome(VALID_INCOME_BOB)
+        Patient expectedPatientMultipleTags = new PatientBuilder(BOB).withIncome(VALID_INCOME_BOB)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + INCOME_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedPersonMultipleTags));
+                        new AddCommand(expectedPatientMultipleTags));
     }
 
     @Test
     public void parse_repeatedNonTagValue_failure() {
-        String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        String validExpectedPatientString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + INCOME_DESC_BOB + TAG_DESC_FRIEND;
 
         // multiple names
-        assertParseFailure(parser, NAME_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertParseFailure(parser, NAME_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // multiple phones
-        assertParseFailure(parser, PHONE_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, PHONE_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // multiple emails
-        assertParseFailure(parser, EMAIL_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
+        assertParseFailure(parser, EMAIL_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
         // multiple addresses
-        assertParseFailure(parser, ADDRESS_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertParseFailure(parser, ADDRESS_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // multiple incomes
-        assertParseFailure(parser, INCOME_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
+        assertParseFailure(parser, INCOME_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
+                        validExpectedPatientString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
                         + ADDRESS_DESC_AMY
-                        + INCOME_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS,
+                                        + INCOME_DESC_AMY + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS,
                         PREFIX_EMAIL, PREFIX_PHONE, PREFIX_INCOME));
 
         // invalid value followed by valid value
 
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertParseFailure(parser, INVALID_NAME_DESC + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // invalid email
-        assertParseFailure(parser, INVALID_EMAIL_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
+        assertParseFailure(parser, INVALID_EMAIL_DESC + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
         // invalid phone
-        assertParseFailure(parser, INVALID_PHONE_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, INVALID_PHONE_DESC + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // invalid address
-        assertParseFailure(parser, INVALID_ADDRESS_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertParseFailure(parser, INVALID_ADDRESS_DESC + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // invalid income
-        assertParseFailure(parser, INVALID_INCOME_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
+        assertParseFailure(parser, INVALID_INCOME_DESC + validExpectedPatientString,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
 
         // valid value followed by invalid value
 
         // invalid name
-        assertParseFailure(parser, validExpectedPersonString + INVALID_NAME_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertParseFailure(parser, validExpectedPatientString + INVALID_NAME_DESC,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // invalid email
-        assertParseFailure(parser, validExpectedPersonString + INVALID_EMAIL_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
+        assertParseFailure(parser, validExpectedPatientString + INVALID_EMAIL_DESC,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
         // invalid phone
-        assertParseFailure(parser, validExpectedPersonString + INVALID_PHONE_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, validExpectedPatientString + INVALID_PHONE_DESC,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // invalid address
-        assertParseFailure(parser, validExpectedPersonString + INVALID_ADDRESS_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertParseFailure(parser, validExpectedPatientString + INVALID_ADDRESS_DESC,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // invalid income
-        assertParseFailure(parser, validExpectedPersonString + INVALID_INCOME_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
+        assertParseFailure(parser, validExpectedPatientString + INVALID_INCOME_DESC,
+                                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder(AMY).withIncome(VALID_INCOME_AMY).withTags().build();
+        Patient expectedPatient = new PatientBuilder(AMY).withIncome(VALID_INCOME_AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY + INCOME_DESC_AMY,
-                new AddCommand(expectedPerson));
+                        new AddCommand(expectedPatient));
     }
 
     @Test
@@ -219,7 +220,7 @@ public class AddCommandParserTest {
         // invalid income
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + INVALID_INCOME_DESC
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, casetrack.app.model.person.Income.MESSAGE_CONSTRAINTS);
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, casetrack.app.model.patient.Income.MESSAGE_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

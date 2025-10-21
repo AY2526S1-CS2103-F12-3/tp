@@ -1,0 +1,16 @@
+{
+  "patients": [ {
+    "name": "Alice Pauline",
+    "phone": "94351253",
+    "email": "alice@example.com",
+    "address": "123, Jurong West Ave 6, #08-111",
+    "income": "1000",
+    "tags": [ "friends" ]
+  }, {
+    "name": "Alice Pauline",
+    "phone": "94351253",
+    "email": "pauline@example.com",
+    "income": "2000",
+    "address": "4th street"
+  } ]
+}

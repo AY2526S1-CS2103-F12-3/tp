@@ -1,6 +1,6 @@
 package casetrack.app.ui;
 
-import casetrack.app.model.person.PersonAttribute;
+import casetrack.app.model.patient.PatientAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -12,7 +12,7 @@ public class DetailCard extends UiPart<Region> {
 
     private static final String FXML = "DetailListCard.fxml";
 
-    public final PersonAttribute attribute;
+    public final PatientAttribute attribute;
 
     @FXML
     private Label title;
@@ -23,7 +23,7 @@ public class DetailCard extends UiPart<Region> {
      * Creates a {@code DetailCard} with the given {@code Attribute} and index to
      * display.
      */
-    public DetailCard(PersonAttribute attribute, int displayedIndex) {
+    public DetailCard(PatientAttribute attribute, int displayedIndex) {
         super(FXML);
         this.attribute = attribute;
         title.setText(attribute.name);

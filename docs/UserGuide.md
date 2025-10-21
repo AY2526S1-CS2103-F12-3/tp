@@ -76,88 +76,88 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a patient: `add`
 
-Adds a person to the address book.
+Adds a patient to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A patient can have any number of tags (including 0)
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-### Listing all persons : `list`
+### Listing all patients : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all patients in the address book.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Editing a patient : `edit`
 
-Edits an existing person in the address book.
+Edits an existing patient in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
+* You can remove all the patient’s tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons: `search`
+### Locating patients: `search`
 
-Finds persons whose specified field contains any of the given keywords.
+Finds patients whose specified field contains any of the given keywords.
 
 Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * Supported fields: `name`, `number`, `email`, `tag`
 
 Examples:
 * `search name John` returns `john` and `John Doe`
 * `search name alex david` returns `Alex Yeoh`, `David Li`
-* `search number 91234567` returns persons with phone number containing `91234567`
-* `search email alice@example.com` returns persons with email containing `alice@example.com`
-* `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
+* `search number 91234567` returns patients with phone number containing `91234567`
+* `search email alice@example.com` returns patients with email containing `alice@example.com`
+* `search tag friend colleague` returns patients with tags containing `friend` or `colleague`<br>
   ![result for 'search name alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete patient`
+### Deleting a patient : `delete patient`
 
-Deletes the specified person from the address book.
+Deletes the specified patient from the address book.
 
 Format: `delete patient INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete patient 2` deletes the 2nd person in the address book.
-* `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
+* `list` followed by `delete patient 2` deletes the 2nd patient in the address book.
+* `search name Betsy` followed by `delete patient 1` deletes the 1st patient in the results of the `search` command.
 
 ### Adding a note : `note`
 
-Adds a note to a person using either their list index, or their name and phone number.
+Adds a note to a patient using either their list index, or their name and phone number.
 
 Format (by index): `note INDEX t/TEXT`
 
 Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
 
-* `INDEX` refers to the index shown in the displayed person list and **must be a positive integer** 1, 2, 3, ...
+* `INDEX` refers to the index shown in the displayed patient list and **must be a positive integer** 1, 2, 3, ...
 * When using `n/NAME p/PHONE`, do not include an index before the prefixes.
 * `t/TEXT` must contain at least one non‑whitespace character.
 * Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
@@ -169,18 +169,18 @@ Examples:
 
 ### Deleting a note : `delete note`
 
-Deletes a specific note from a person.
+Deletes a specific note from a patient.
 
-Format: `delete note PERSON_INDEX NOTE_INDEX`
+Format: `delete note PATIENT_INDEX NOTE_INDEX`
 
-* Deletes the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+* Deletes the note at the specified `NOTE_INDEX` from the patient at `PATIENT_INDEX`.
 * Both indices refer to the index numbers shown in the displayed lists.
 * Both indices **must be positive integers** 1, 2, 3, ...
-* The person must have notes to delete.
+* The patient must have notes to delete.
 
 Examples:
-* `delete note 1 2` deletes the 2nd note from the 1st person in the address book.
-* `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
+* `delete note 1 2` deletes the 2nd note from the 1st patient in the address book.
+* `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 
 ### Clearing all entries : `clear`
 

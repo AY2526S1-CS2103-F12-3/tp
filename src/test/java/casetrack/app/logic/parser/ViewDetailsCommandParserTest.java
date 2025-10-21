@@ -3,7 +3,7 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class ViewDetailsCommandParserTest {
 
     @Test
     public void parse_validPatientArgs_returnsViewDetailsCommand() {
-        assertParseSuccess(parser, "1", new ViewDetailsCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new ViewDetailsCommand(INDEX_FIRST_PATIENT));
     }
 
     @Test

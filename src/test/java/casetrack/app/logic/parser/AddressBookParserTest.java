@@ -3,7 +3,7 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static casetrack.app.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static casetrack.app.testutil.Assert.assertThrows;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +17,7 @@ import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
 import casetrack.app.logic.commands.DeletePatientCommand;
 import casetrack.app.logic.commands.EditCommand;
-import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditCommand.EditPatientDescriptor;
 import casetrack.app.logic.commands.ExitCommand;
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.commands.HelpCommand;
@@ -25,12 +25,12 @@ import casetrack.app.logic.commands.ListCommand;
 import casetrack.app.logic.commands.NoteCommand;
 import casetrack.app.logic.commands.ViewDetailsCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.NameContainsKeywordsPredicate;
-import casetrack.app.model.person.Note;
-import casetrack.app.model.person.Person;
-import casetrack.app.testutil.EditPersonDescriptorBuilder;
-import casetrack.app.testutil.PersonBuilder;
-import casetrack.app.testutil.PersonUtil;
+import casetrack.app.model.patient.NameContainsKeywordsPredicate;
+import casetrack.app.model.patient.Note;
+import casetrack.app.model.patient.Patient;
+import casetrack.app.testutil.EditPatientDescriptorBuilder;
+import casetrack.app.testutil.PatientBuilder;
+import casetrack.app.testutil.PatientUtil;
 
 public class AddressBookParserTest {
 
@@ -38,9 +38,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        Patient patient = new PatientBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommand(patient));
+        assertEquals(new AddCommand(patient), command);
     }
 
     @Test
@@ -52,17 +52,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeletePatientCommand command = (DeletePatientCommand) parser.parseCommand(
-                DeletePatientCommand.COMMAND_WORD + " patient " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeletePatientCommand(INDEX_FIRST_PERSON), command);
+                DeletePatientCommand.COMMAND_WORD + " patient " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new DeletePatientCommand(INDEX_FIRST_PATIENT), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Patient patient = new PatientBuilder().build();
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_PATIENT.getOneBased() + " " + PatientUtil.getEditPatientDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_PATIENT, descriptor), command);
     }
 
     @Test
@@ -100,8 +100,8 @@ public class AddressBookParserTest {
     public void parseCommand_note() throws Exception {
         Note note = new Note("Follow-up in 2 weeks");
         NoteCommand command = (NoteCommand) parser.parseCommand(NoteCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " t/Follow-up in 2 weeks");
-        assertEquals(new NoteCommand(INDEX_FIRST_PERSON, note), command);
+                + INDEX_FIRST_PATIENT.getOneBased() + " t/Follow-up in 2 weeks");
+        assertEquals(new NoteCommand(INDEX_FIRST_PATIENT, note), command);
     }
 
     @Test

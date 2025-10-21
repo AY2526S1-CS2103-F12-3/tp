@@ -1,7 +1,7 @@
 package casetrack.app.logic.commands;
 
 import static casetrack.app.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
+import static casetrack.app.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 

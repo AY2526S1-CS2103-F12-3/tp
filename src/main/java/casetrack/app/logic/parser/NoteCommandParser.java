@@ -8,9 +8,9 @@ import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.logic.commands.NoteCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Note;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Note;
+import casetrack.app.model.patient.Phone;
 
 /**
  * Parses input arguments and creates a new NoteCommand object

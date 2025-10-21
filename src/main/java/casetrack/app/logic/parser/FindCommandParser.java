@@ -8,11 +8,11 @@ import java.util.function.Predicate;
 
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.EmailContainsKeywordsPredicate;
-import casetrack.app.model.person.NameContainsKeywordsPredicate;
-import casetrack.app.model.person.Person;
-import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
-import casetrack.app.model.person.TagContainsKeywordsPredicate;
+import casetrack.app.model.patient.EmailContainsKeywordsPredicate;
+import casetrack.app.model.patient.NameContainsKeywordsPredicate;
+import casetrack.app.model.patient.Patient;
+import casetrack.app.model.patient.PhoneContainsKeywordsPredicate;
+import casetrack.app.model.patient.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -41,7 +41,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String searchType = argParts[0].toLowerCase();
         List<String> keywords = Arrays.asList(Arrays.copyOfRange(argParts, 1, argParts.length));
 
-        Predicate<Person> predicate = subcommand(searchType, keywords);
+        Predicate<Patient> predicate = subcommand(searchType, keywords);
         return new FindCommand(predicate);
     }
 
@@ -52,7 +52,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @return the appropriate predicate for the search type
      * @throws ParseException if the search type is invalid
      */
-    private Predicate<Person> subcommand(String searchType, List<String> keywords) throws ParseException {
+    private Predicate<Patient> subcommand(String searchType, List<String> keywords) throws ParseException {
         switch (searchType) {
         case "name":
             return new NameContainsKeywordsPredicate(keywords);

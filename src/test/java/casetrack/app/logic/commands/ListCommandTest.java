@@ -1,9 +1,9 @@
 package casetrack.app.logic.commands;
 
 import static casetrack.app.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static casetrack.app.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
+import static casetrack.app.logic.commands.CommandTestUtil.showPatientAtIndex;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
+import static casetrack.app.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPatientAtIndex(model, INDEX_FIRST_PATIENT);
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

@@ -3,7 +3,7 @@ package casetrack.app.logic.commands;
 import java.util.Objects;
 
 import casetrack.app.commons.util.ToStringBuilder;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 
 /**
  * Represents the result of a command execution.
@@ -19,12 +19,12 @@ public class CommandResult {
     private final boolean exit;
 
     /** The application should display details for a patient. */
-    private final Person detailTarget;
+    private final Patient detailTarget;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, Person detailTarget, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, Patient detailTarget, boolean showHelp, boolean exit) {
         this.feedbackToUser = feedbackToUser;
         this.detailTarget = detailTarget;
         this.showHelp = showHelp;
@@ -38,7 +38,7 @@ public class CommandResult {
         this(feedbackToUser, null, false, false);
     }
 
-    public Person getDetailTarget() {
+    public Patient getDetailTarget() {
         return detailTarget;
     }
 

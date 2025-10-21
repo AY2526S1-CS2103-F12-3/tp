@@ -9,10 +9,10 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.commands.FindCommand;
-import casetrack.app.model.person.EmailContainsKeywordsPredicate;
-import casetrack.app.model.person.NameContainsKeywordsPredicate;
-import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
-import casetrack.app.model.person.TagContainsKeywordsPredicate;
+import casetrack.app.model.patient.EmailContainsKeywordsPredicate;
+import casetrack.app.model.patient.NameContainsKeywordsPredicate;
+import casetrack.app.model.patient.PhoneContainsKeywordsPredicate;
+import casetrack.app.model.patient.TagContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 

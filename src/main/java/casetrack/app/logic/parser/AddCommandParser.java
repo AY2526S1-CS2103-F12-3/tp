@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.Address;
-import casetrack.app.model.person.Email;
-import casetrack.app.model.person.Income;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Person;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Address;
+import casetrack.app.model.patient.Email;
+import casetrack.app.model.patient.Income;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Patient;
+import casetrack.app.model.patient.Phone;
 import casetrack.app.model.tag.Tag;
 
 /**
@@ -50,9 +50,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Income income = ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, income, tagList);
+        Patient patient = new Patient(name, phone, email, address, income, tagList);
 
-        return new AddCommand(person);
+        return new AddCommand(patient);
     }
 
     /**

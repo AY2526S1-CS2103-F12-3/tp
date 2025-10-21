@@ -9,7 +9,7 @@ import casetrack.app.logic.Logic;
 import casetrack.app.logic.commands.CommandResult;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.logic.parser.exceptions.ParseException;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -34,7 +34,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
+    private PatientListPanel patientListPanel;
     private DetailListPanel detailListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
@@ -46,7 +46,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane patientListPanelPlaceholder;
 
     @FXML
     private StackPane detailListPanelPlaceholder;
@@ -60,9 +60,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    private Consumer<Person> selectPersonCallback = new Consumer<Person>() {
+    private Consumer<Patient> selectPatientCallback = new Consumer<Patient>() {
         @Override
-        public void accept(Person t) {
+        public void accept(Patient t) {
             detailListPanel.showDetails(t);
 
             // unhide panel if hidden
@@ -135,9 +135,9 @@ public class MainWindow extends UiPart<Stage> {
         detailListPanel = new DetailListPanel();
         detailListPanelPlaceholder.getChildren().add(detailListPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanel.setPersonSelectCallback(selectPersonCallback);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        patientListPanel = new PatientListPanel(logic.getFilteredPatientList());
+        patientListPanel.setPatientSelectCallback(selectPatientCallback);
+        patientListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -167,8 +167,8 @@ public class MainWindow extends UiPart<Stage> {
      * @param patient The patient to display details for.
      */
     @FXML
-    public void handleViewPatient(Person patient) {
-        selectPersonCallback.accept(patient);
+    public void handleViewPatient(Patient patient) {
+        selectPatientCallback.accept(patient);
     }
 
     /**
@@ -199,8 +199,8 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public PatientListPanel getPatientListPanel() {
+        return patientListPanel;
     }
 
     /**
@@ -223,9 +223,9 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.getDetailTarget() != null) {
-                Person detailTarget = commandResult.getDetailTarget();
-                selectPersonCallback.accept(detailTarget);
-                personListPanel.setSelectedPerson(detailTarget);
+                Patient detailTarget = commandResult.getDetailTarget();
+                selectPatientCallback.accept(detailTarget);
+                patientListPanel.setSelectedPatient(detailTarget);
             }
 
             return commandResult;

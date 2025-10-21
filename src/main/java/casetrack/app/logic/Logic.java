@@ -7,7 +7,7 @@ import casetrack.app.logic.commands.CommandResult;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.ReadOnlyAddressBook;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 import javafx.collections.ObservableList;
 
 /**
@@ -30,8 +30,8 @@ public interface Logic {
      */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of patients */
+    ObservableList<Patient> getFilteredPatientList();
 
     /**
      * Returns the user prefs' address book file path.

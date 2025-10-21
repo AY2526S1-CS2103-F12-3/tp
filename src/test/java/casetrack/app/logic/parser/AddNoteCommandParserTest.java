@@ -6,15 +6,15 @@ import static casetrack.app.logic.parser.CliSyntax.PREFIX_NOTE_TEXT;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 
 import org.junit.jupiter.api.Test;
 
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.logic.commands.NoteCommand;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Note;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Note;
+import casetrack.app.model.patient.Phone;
 
 public class AddNoteCommandParserTest {
 
@@ -22,7 +22,7 @@ public class AddNoteCommandParserTest {
 
     @Test
     public void parse_validArgsWithIndex_returnsNoteCommand() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_PATIENT;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE_TEXT + "Follow-up in 2 weeks";
         Note expectedNote = new Note("Follow-up in 2 weeks");
         NoteCommand expectedCommand = new NoteCommand(targetIndex, expectedNote);
@@ -140,7 +140,7 @@ public class AddNoteCommandParserTest {
     public void parse_validArgsWithExtraSpaces_returnsNoteCommand() {
         String userInput = "  1   " + PREFIX_NOTE_TEXT + "  Follow-up in 2 weeks  ";
         Note expectedNote = new Note("Follow-up in 2 weeks");
-        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, expectedNote);
+        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PATIENT, expectedNote);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -148,7 +148,7 @@ public class AddNoteCommandParserTest {
     public void parse_validArgsWithSpecialCharacters_returnsNoteCommand() {
         String userInput = "1 " + PREFIX_NOTE_TEXT + "Patient needs follow-up @clinic #urgent!";
         Note expectedNote = new Note("Patient needs follow-up @clinic #urgent!");
-        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, expectedNote);
+        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PATIENT, expectedNote);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 }

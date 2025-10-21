@@ -14,7 +14,7 @@ import casetrack.app.logic.parser.AddressBookParser;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.Model;
 import casetrack.app.model.ReadOnlyAddressBook;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 import casetrack.app.storage.Storage;
 import javafx.collections.ObservableList;
 
@@ -67,8 +67,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Patient> getFilteredPatientList() {
+        return model.getFilteredPatientList();
     }
 
     @Override

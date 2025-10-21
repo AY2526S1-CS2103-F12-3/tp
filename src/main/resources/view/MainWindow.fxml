@@ -37,11 +37,11 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0">
                      <children>
-                                <VBox fx:id="personList" prefWidth="340.0" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox fx:id="patientList" prefWidth="340.0" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <padding>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                       </padding>
-                      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                      <StackPane fx:id="patientListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                     </VBox>
                      </children>
                   </AnchorPane>

@@ -2,11 +2,11 @@ package casetrack.app.logic.commands;
 
 import static casetrack.app.logic.commands.CommandTestUtil.assertCommandFailure;
 import static casetrack.app.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static casetrack.app.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static casetrack.app.logic.commands.CommandTestUtil.showPatientAtIndex;
 import static casetrack.app.testutil.Assert.assertThrows;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static casetrack.app.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
+import static casetrack.app.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,10 +20,10 @@ import casetrack.app.logic.Messages;
 import casetrack.app.model.Model;
 import casetrack.app.model.ModelManager;
 import casetrack.app.model.UserPrefs;
-import casetrack.app.model.person.Name;
-import casetrack.app.model.person.Note;
-import casetrack.app.model.person.Person;
-import casetrack.app.model.person.Phone;
+import casetrack.app.model.patient.Name;
+import casetrack.app.model.patient.Note;
+import casetrack.app.model.patient.Patient;
+import casetrack.app.model.patient.Phone;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for NoteCommand.
@@ -40,7 +40,7 @@ public class AddNoteCommandTest {
 
     @Test
     public void constructor_nullNote_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new NoteCommand(INDEX_FIRST_PERSON, null));
+        assertThrows(NullPointerException.class, () -> new NoteCommand(INDEX_FIRST_PATIENT, null));
     }
 
     @Test
@@ -66,68 +66,68 @@ public class AddNoteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToAddNoteTo = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient patientToAddNoteTo = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
         Note noteToAdd = new Note("Follow-up in 2 weeks");
-        NoteCommand noteCommand = new NoteCommand(INDEX_FIRST_PERSON, noteToAdd);
+        NoteCommand noteCommand = new NoteCommand(INDEX_FIRST_PATIENT, noteToAdd);
 
-        Person expectedPerson = personToAddNoteTo.addNote(noteToAdd);
+        Patient expectedPatient = patientToAddNoteTo.addNote(noteToAdd);
         String expectedMessage = String.format(NoteCommand.MESSAGE_SUCCESS,
-                expectedPerson.getName().fullName,
-                expectedPerson.getPhone().value,
+                expectedPatient.getName().fullName,
+                        expectedPatient.getPhone().value,
                 noteToAdd.value);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setPerson(personToAddNoteTo, expectedPerson);
+        expectedModel.setPatient(patientToAddNoteTo, expectedPatient);
 
-        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPatient, false, false);
         assertCommandSuccess(noteCommand, model, expectedResult, expectedModel);
     }
 
     @Test
     public void execute_validNameAndPhoneUnfilteredList_success() {
-        Person personToAddNoteTo = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient patientToAddNoteTo = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
         Note noteToAdd = new Note("Follow-up in 2 weeks");
-        NoteCommand noteCommand = new NoteCommand(personToAddNoteTo.getName(),
-                personToAddNoteTo.getPhone(), noteToAdd);
+        NoteCommand noteCommand = new NoteCommand(patientToAddNoteTo.getName(),
+                patientToAddNoteTo.getPhone(), noteToAdd);
 
-        Person expectedPerson = personToAddNoteTo.addNote(noteToAdd);
+        Patient expectedPatient = patientToAddNoteTo.addNote(noteToAdd);
         String expectedMessage = String.format(NoteCommand.MESSAGE_SUCCESS,
-                expectedPerson.getName().fullName,
-                expectedPerson.getPhone().value,
+                expectedPatient.getName().fullName,
+                        expectedPatient.getPhone().value,
                 noteToAdd.value);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setPerson(personToAddNoteTo, expectedPerson);
+        expectedModel.setPatient(patientToAddNoteTo, expectedPatient);
 
-        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPatient, false, false);
         assertCommandSuccess(noteCommand, model, expectedResult, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPatientList().size() + 1);
         Note noteToAdd = new Note("Follow-up in 2 weeks");
         NoteCommand noteCommand = new NoteCommand(outOfBoundIndex, noteToAdd);
 
-        assertCommandFailure(noteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(noteCommand, model, Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_invalidNameAndPhone_throwsCommandException() {
-        Name nonExistentName = new Name("Non Existent Person");
+        Name nonExistentName = new Name("Non Existent Patient");
         Phone nonExistentPhone = new Phone("99999999");
         Note noteToAdd = new Note("Follow-up in 2 weeks");
         NoteCommand noteCommand = new NoteCommand(nonExistentName, nonExistentPhone, noteToAdd);
 
-        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PERSON_NOT_FOUND);
+        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PATIENT_NOT_FOUND);
     }
 
     @Test
     public void execute_missingPatientReference_throwsCommandException() throws Exception {
         // Start with a valid name/phone NoteCommand, then remove phone via reflection
-        Person somePerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Name existingName = somePerson.getName();
-        Phone existingPhone = somePerson.getPhone();
+        Patient somePatient = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Name existingName = somePatient.getName();
+        Phone existingPhone = somePatient.getPhone();
         Note noteToAdd = new Note("Any note");
         NoteCommand noteCommand = new NoteCommand(existingName, existingPhone, noteToAdd);
 
@@ -141,27 +141,27 @@ public class AddNoteCommandTest {
 
     @Test
     public void execute_validNameButInvalidPhone_throwsCommandException() {
-        Person existingPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Name existingName = existingPerson.getName();
+        Patient existingPatient = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Name existingName = existingPatient.getName();
         Phone nonExistentPhone = new Phone("99999999");
         Note noteToAdd = new Note("Follow-up in 2 weeks");
         NoteCommand noteCommand = new NoteCommand(existingName, nonExistentPhone, noteToAdd);
 
-        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PERSON_NOT_FOUND);
+        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PATIENT_NOT_FOUND);
     }
 
     @Test
     public void execute_nameAndPhoneNotInFilteredList_throwsCommandException() {
-        // Take details from the first person, then filter to show only the second person
-        Person target = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        // Take details from the first patient, then filter to show only the second patient
+        Patient target = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
         Name targetName = target.getName();
         Phone targetPhone = target.getPhone();
         Note noteToAdd = new Note("Filter test note");
 
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
+        showPatientAtIndex(model, INDEX_SECOND_PATIENT);
 
         NoteCommand noteCommand = new NoteCommand(targetName, targetPhone, noteToAdd);
-        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PERSON_NOT_FOUND);
+        assertCommandFailure(noteCommand, model, NoteCommand.MESSAGE_PATIENT_NOT_FOUND);
     }
 
     @Test
@@ -173,15 +173,15 @@ public class AddNoteCommandTest {
         Phone phone1 = new Phone("91234567");
         Phone phone2 = new Phone("98765432");
 
-        NoteCommand addNoteFirstCommand = new NoteCommand(INDEX_FIRST_PERSON, note1);
-        NoteCommand addNoteSecondCommand = new NoteCommand(INDEX_SECOND_PERSON, note1);
+        NoteCommand addNoteFirstCommand = new NoteCommand(INDEX_FIRST_PATIENT, note1);
+        NoteCommand addNoteSecondCommand = new NoteCommand(INDEX_SECOND_PATIENT, note1);
         NoteCommand addNoteNamePhoneCommand = new NoteCommand(name1, phone1, note1);
 
         // same object -> returns true
         assertTrue(addNoteFirstCommand.equals(addNoteFirstCommand));
 
         // same values -> returns true
-        NoteCommand addNoteFirstCommandCopy = new NoteCommand(INDEX_FIRST_PERSON, note1);
+        NoteCommand addNoteFirstCommandCopy = new NoteCommand(INDEX_FIRST_PATIENT, note1);
         assertTrue(addNoteFirstCommand.equals(addNoteFirstCommandCopy));
 
         // different types -> returns false
@@ -190,11 +190,11 @@ public class AddNoteCommandTest {
         // null -> returns false
         assertFalse(addNoteFirstCommand.equals(null));
 
-        // different person index -> returns false
+        // different patient index -> returns false
         assertFalse(addNoteFirstCommand.equals(addNoteSecondCommand));
 
         // different note -> returns false
-        NoteCommand addNoteDifferentNoteCommand = new NoteCommand(INDEX_FIRST_PERSON, note2);
+        NoteCommand addNoteDifferentNoteCommand = new NoteCommand(INDEX_FIRST_PATIENT, note2);
         assertFalse(addNoteFirstCommand.equals(addNoteDifferentNoteCommand));
 
         // different identification method -> returns false

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import casetrack.app.model.person.Note;
+import casetrack.app.model.patient.Note;
 
 public class NoteTest {
 

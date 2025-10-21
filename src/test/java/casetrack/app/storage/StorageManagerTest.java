@@ -1,6 +1,6 @@
 package casetrack.app.storage;
 
-import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
+import static casetrack.app.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

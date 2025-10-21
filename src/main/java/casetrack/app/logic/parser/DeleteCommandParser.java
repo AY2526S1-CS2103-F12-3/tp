@@ -15,7 +15,7 @@ import casetrack.app.logic.parser.exceptions.ParseException;
 public class DeleteCommandParser implements Parser<Command> {
 
     public static final String MESSAGE_INVALID_DELETE_FORMAT =
-        "Expected 'delete note <PERSON_INDEX> <NOTE_INDEX>' or 'delete patient <INDEX>'";
+            "Expected 'delete note <PATIENT_INDEX> <NOTE_INDEX>' or 'delete patient <INDEX>'";
 
     /**
      * Parses the given {@code String} of arguments and returns either a DeleteNoteCommand
@@ -36,9 +36,9 @@ public class DeleteCommandParser implements Parser<Command> {
                         DeleteNoteCommand.MESSAGE_USAGE));
             }
 
-            Index personIndex = ParserUtil.parseIndex(parts[0]);
+            Index patientIndex = ParserUtil.parseIndex(parts[0]);
             Index noteIndex = ParserUtil.parseIndex(parts[1]);
-            return new DeleteNoteCommand(personIndex, noteIndex);
+            return new DeleteNoteCommand(patientIndex, noteIndex);
 
         } else if (trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")) {
             String remainingArgs = trimmedArgs.substring(ParserUtil.PATIENT_STRING.length() + 1).trim();

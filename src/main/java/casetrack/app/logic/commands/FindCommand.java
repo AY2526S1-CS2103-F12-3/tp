@@ -7,10 +7,10 @@ import java.util.function.Predicate;
 import casetrack.app.commons.util.ToStringBuilder;
 import casetrack.app.logic.Messages;
 import casetrack.app.model.Model;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 
 /**
- * Finds and lists all persons in address book whose specified field contains any of the argument keywords.
+ * Finds and lists all patients in address book whose specified field contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
@@ -18,7 +18,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds all persons whose specified field contains any of "
+            + ": Finds all patients whose specified field contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: FIELD KEYWORD [MORE_KEYWORDS]...\n"
             + "Supported fields: name, number, email, tag\n"
@@ -27,18 +27,18 @@ public class FindCommand extends Command {
             + "          " + COMMAND_WORD + " email alice@example.com\n"
             + "          " + COMMAND_WORD + " tag friend colleague";
 
-    private final Predicate<Person> predicate;
+    private final Predicate<Patient> predicate;
 
-    public FindCommand(Predicate<Person> predicate) {
+    public FindCommand(Predicate<Patient> predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredPatientList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredPatientList().size()));
     }
 
     @Override

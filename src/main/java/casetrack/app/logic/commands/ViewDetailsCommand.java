@@ -9,10 +9,10 @@ import casetrack.app.commons.util.ToStringBuilder;
 import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 
 /**
- * Views details for a person identified using it's displayed index from the address book.
+ * Views details for a patient identified using it's displayed index from the address book.
  */
 public class ViewDetailsCommand extends Command {
 
@@ -34,13 +34,13 @@ public class ViewDetailsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Patient> lastShownList = model.getFilteredPatientList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
-        Person detailTarget = lastShownList.get(targetIndex.getZeroBased());
+        Patient detailTarget = lastShownList.get(targetIndex.getZeroBased());
         return new CommandResult(
             String.format(MESSAGE_VIEW_DETAILS_SUCCESS, Messages.format(detailTarget)), detailTarget, false, false);
     }

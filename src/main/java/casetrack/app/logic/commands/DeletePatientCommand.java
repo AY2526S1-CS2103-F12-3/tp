@@ -9,21 +9,21 @@ import casetrack.app.commons.util.ToStringBuilder;
 import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
-import casetrack.app.model.person.Person;
+import casetrack.app.model.patient.Patient;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a patient identified using it's displayed index from the address book.
  */
 public class DeletePatientCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
+            + ": Deletes the patient identified by the index number used in the displayed patient list.\n"
             + "Parameters: patient INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " patient 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PATIENT_SUCCESS = "Deleted Patient: %1$s";
 
     private final Index targetIndex;
 
@@ -34,15 +34,15 @@ public class DeletePatientCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Patient> lastShownList = model.getFilteredPatientList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        Patient patientToDelete = lastShownList.get(targetIndex.getZeroBased());
+        model.deletePatient(patientToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_PATIENT_SUCCESS, Messages.format(patientToDelete)));
     }
 
     @Override

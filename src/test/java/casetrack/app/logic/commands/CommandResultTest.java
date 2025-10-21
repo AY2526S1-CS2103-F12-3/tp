@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import casetrack.app.testutil.PersonBuilder;
+import casetrack.app.testutil.PatientBuilder;
 
 public class CommandResultTest {
     @Test
@@ -34,11 +34,11 @@ public class CommandResultTest {
         assertFalse(commandResult.equals(new CommandResult("feedback", null, true, false)));
 
         CommandResult resultWithDetailTarget = new CommandResult("feedback",
-                new PersonBuilder().build(), false, false);
+                new PatientBuilder().build(), false, false);
 
         // different detailTarget value -> returns false
         assertFalse(resultWithDetailTarget.equals(new CommandResult("feedback",
-                new PersonBuilder().withName("diff").build(), false, false)));
+                new PatientBuilder().withName("diff").build(), false, false)));
 
         // different detailTarget value (1 null) -> returns false
         assertFalse(commandResult.equals(resultWithDetailTarget));
@@ -46,7 +46,7 @@ public class CommandResultTest {
 
         // same detailTarget value -> returns true
         assertTrue(resultWithDetailTarget.equals(new CommandResult("feedback",
-                new PersonBuilder().build(), false, false)));
+                new PatientBuilder().build(), false, false)));
 
         // both detailTarget = null -> returns true
         assertTrue(commandResult.equals(new CommandResult("feedback")));
