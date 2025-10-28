@@ -114,7 +114,7 @@
         "viewing-help-help": "Viewing help : help",
         "adding-a-person-add": "Adding a person: add",
         "listing-all-persons-list": "Listing all persons : list",
-        "editing-a-person-edit": "Editing a person : edit",
+        "editing-a-person-edit-patient": "Editing a person : edit patient",
         "locating-persons-search": "Locating persons: search",
         "deleting-a-person-delete-patient": "Deleting a person : delete patient",
         "adding-a-note-note": "Adding a note : note",
