@@ -62,7 +62,14 @@
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
+        "adding-a-patient": "Adding a patient",
+        "searching-filtering-patients": "Searching/filtering patients",
         "deleting-a-patient": "Deleting a patient",
+        "adding-a-note-to-a-patient": "Adding a note to a patient",
+        "editing-a-note": "Editing a note",
+        "viewing-patient-details": "Viewing patient details",
+        "editing-patient-income": "Editing patient income",
+        "editing-patient-medical-information": "Editing patient medical information",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
