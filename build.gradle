@@ -27,6 +27,12 @@ run {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+
+    systemProperty 'java.awt.headless', 'true'
+    systemProperty 'testfx.robot', 'glass'
+    systemProperty 'testfx.headless', 'true'
+    systemProperty 'prism.order', 'sw'
+    systemProperty 'prism.text', 't2k'
 }
 
 task coverage(type: JacocoReport) {
