@@ -96,7 +96,7 @@ public class AddNoteCommandParserTest {
 
     @Test
     public void parse_invalidName_throwsParseException() {
-        String userInput = " " + PREFIX_NAME + "John@Doe " + PREFIX_PHONE + "91234567 "
+        String userInput = " " + PREFIX_NAME + "11111 " + PREFIX_PHONE + "91234567 "
                 + PREFIX_NOTE_TEXT + "Valid note";
         assertParseFailure(parser, userInput, Name.MESSAGE_CONSTRAINTS);
     }
