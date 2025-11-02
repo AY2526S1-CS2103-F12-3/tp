@@ -60,6 +60,7 @@
         "user-stories": "User stories",
         "use-cases": "Use cases",
         "non-functional-requirements": "Non-Functional Requirements",
+        "security-and-privacy-considerations": "Security and Privacy Considerations",
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
@@ -133,6 +134,7 @@
         "exiting-the-program-exit": "Exiting the program : exit",
         "saving-the-data": "Saving the data",
         "editing-the-data-file": "Editing the data file",
+        "data-security-and-privacy": "Data security and privacy",
         "faq": "FAQ",
         "known-issues": "Known issues",
         "command-summary": "Command summary"
