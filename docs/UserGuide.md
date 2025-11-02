@@ -254,6 +254,12 @@ Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
 * `t/TEXT` must contain at least one non‑whitespace character.
 * Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
 
+<box type="info" seamless>
+
+**Note:** If multiple `t/` prefixes are specified (e.g., `note 2 t/test 1 t/test 2`), only the **first** text value will be used, and subsequent values will be ignored. In this example, the note will contain "test 1".
+
+</box>
+
 Examples:
 
 * `note 1 t/Follow-up in 2 weeks`
@@ -270,6 +276,12 @@ Format: `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`
 - Both indices **must be positive integers** 1, 2, 3, ...
 - The patient must have notes to edit.
 - `t/NEW_TEXT` must contain at least one non-whitespace character.
+
+<box type="info" seamless>
+
+**Note:** If multiple `t/` prefixes are specified (e.g., `edit note 1 1 t/first t/second`), only the **first** text value will be used, and subsequent values will be ignored.
+
+</box>
 
 Examples:
 
