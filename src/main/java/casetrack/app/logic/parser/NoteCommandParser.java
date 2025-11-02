@@ -27,11 +27,12 @@ public class NoteCommandParser implements Parser<NoteCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_NOTE_TEXT);
 
         // Check if note text is present
-        if (!argMultimap.getValue(PREFIX_NOTE_TEXT).isPresent()) {
+        if (argMultimap.getAllValues(PREFIX_NOTE_TEXT).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
         }
 
-        Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
+        // Take the first note text if multiple are specified
+        Note note = ParserUtil.parseNote(argMultimap.getAllValues(PREFIX_NOTE_TEXT).get(0));
 
         // Check for name and phone-based identification
         if (argMultimap.getValue(PREFIX_NAME).isPresent() && argMultimap.getValue(PREFIX_PHONE).isPresent()) {

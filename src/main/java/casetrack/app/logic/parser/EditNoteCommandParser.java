@@ -32,7 +32,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
                     EditNoteCommand.MESSAGE_USAGE));
         }
 
-        if (!argMultimap.getValue(PREFIX_NOTE_TEXT).isPresent()) {
+        if (argMultimap.getAllValues(PREFIX_NOTE_TEXT).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditNoteCommand.MESSAGE_USAGE));
         }
@@ -49,7 +49,8 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
                     EditNoteCommand.MESSAGE_USAGE), pe);
         }
 
-        newNote = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
+        // Take the first note text if multiple are specified
+        newNote = ParserUtil.parseNote(argMultimap.getAllValues(PREFIX_NOTE_TEXT).get(0));
 
         return new EditNoteCommand(patientIndex, noteIndex, newNote);
     }

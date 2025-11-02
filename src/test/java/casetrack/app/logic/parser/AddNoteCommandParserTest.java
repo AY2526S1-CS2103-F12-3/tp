@@ -151,4 +151,13 @@ public class AddNoteCommandParserTest {
         NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, expectedNote);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+
+    @Test
+    public void parse_multipleNoteTextPrefixes_takesFirstValue() {
+        // Test with index-based identification
+        String userInput = "2 " + PREFIX_NOTE_TEXT + "test 1 " + PREFIX_NOTE_TEXT + "test 2";
+        Note expectedNote = new Note("test 1");
+        NoteCommand expectedCommand = new NoteCommand(Index.fromOneBased(2), expectedNote);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
 }
